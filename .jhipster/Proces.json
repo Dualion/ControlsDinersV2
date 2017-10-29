@@ -1,0 +1,20 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "dataInici",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "estat",
+            "fieldType": "Boolean"
+        }
+    ],
+    "changelogDate": "20171028160656",
+    "dto": "mapstruct",
+    "service": "serviceImpl",
+    "entityTableName": "proces",
+    "jpaMetamodelFiltering": false,
+    "pagination": "pagination"
+}

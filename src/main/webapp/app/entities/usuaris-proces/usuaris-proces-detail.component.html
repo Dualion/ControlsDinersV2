@@ -1,0 +1,37 @@
+
+<div *ngIf="usuarisProces">
+    <h2><span jhiTranslate="controlDinersApp.usuarisProces.detail.title">Usuaris Proces</span> {{usuarisProces.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="controlDinersApp.usuarisProces.diners">Diners</span></dt>
+        <dd>
+            <span>{{usuarisProces.diners}}</span>
+        </dd>
+        <dt><span jhiTranslate="controlDinersApp.usuarisProces.proces">Proces</span></dt>
+        <dd>
+            <div *ngIf="usuarisProces.procesId">
+                <a [routerLink]="['/proces', usuarisProces.procesId]">{{usuarisProces.procesId}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="controlDinersApp.usuarisProces.usuaris">Usuaris</span></dt>
+        <dd>
+            <div *ngIf="usuarisProces.usuarisId">
+                <a [routerLink]="['/usuaris', usuarisProces.usuarisId]">{{usuarisProces.usuarisNom}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'usuaris-proces/'+ usuarisProces.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

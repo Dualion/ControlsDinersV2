@@ -1,0 +1,32 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "proces",
+            "otherEntityName": "proces",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "usuaris",
+            "otherEntityName": "usuaris",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "nom"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "diners",
+            "fieldType": "Float",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20171028161448",
+    "dto": "mapstruct",
+    "service": "serviceImpl",
+    "entityTableName": "usuaris_proces",
+    "jpaMetamodelFiltering": false,
+    "pagination": "pagination"
+}

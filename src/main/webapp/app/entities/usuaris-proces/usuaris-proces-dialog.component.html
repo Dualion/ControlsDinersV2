@@ -1,0 +1,54 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myUsuarisProcesLabel" jhiTranslate="controlDinersApp.usuarisProces.home.createOrEditLabel">Create or edit a Usuaris Proces</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!usuarisProces.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="usuarisProces.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="controlDinersApp.usuarisProces.diners" for="field_diners">Diners</label>
+            <input type="number" class="form-control" name="diners" id="field_diners"
+                [(ngModel)]="usuarisProces.diners" required />
+            <div [hidden]="!(editForm.controls.diners?.dirty && editForm.controls.diners?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.diners?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.diners?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="controlDinersApp.usuarisProces.proces" for="field_proces">Proces</label>
+            <select class="form-control" id="field_proces" name="proces" [(ngModel)]="usuarisProces.procesId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="procesOption.id" *ngFor="let procesOption of proces; trackBy: trackProcesById">{{procesOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="controlDinersApp.usuarisProces.usuaris" for="field_usuaris">Usuaris</label>
+            <select class="form-control" id="field_usuaris" name="usuaris" [(ngModel)]="usuarisProces.usuarisId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="usuarisOption.id" *ngFor="let usuarisOption of usuarises; trackBy: trackUsuarisById">{{usuarisOption.nom}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

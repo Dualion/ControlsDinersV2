@@ -1,0 +1,26 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "diners",
+            "fieldType": "Float",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "actiu",
+            "fieldType": "Boolean",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20171028160845",
+    "dto": "mapstruct",
+    "service": "serviceImpl",
+    "entityTableName": "quantitat",
+    "jpaMetamodelFiltering": false,
+    "pagination": "pagination"
+}

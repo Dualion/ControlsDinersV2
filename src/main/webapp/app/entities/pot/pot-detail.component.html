@@ -1,0 +1,33 @@
+
+<div *ngIf="pot">
+    <h2><span jhiTranslate="controlDinersApp.pot.detail.title">Pot</span> {{pot.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="controlDinersApp.pot.dinersTotals">Diners Totals</span></dt>
+        <dd>
+            <span>{{pot.dinersTotals}}</span>
+        </dd>
+        <dt><span jhiTranslate="controlDinersApp.pot.data">Data</span></dt>
+        <dd>
+            <span>{{pot.data | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="controlDinersApp.pot.descripcio">Descripcio</span></dt>
+        <dd>
+            <span>{{pot.descripcio}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'pot/'+ pot.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

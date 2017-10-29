@@ -80,7 +80,7 @@ jhipster:
     mail:
         from: ControlDiners@localhost
     swagger:
-        default-include-pattern: /api/.*
+        default-include-pattern: /(api|public)/.*
         title: ControlDiners API
         description: ControlDiners API documentation
         version: 0.0.1

@@ -1,0 +1,76 @@
+<div>
+    <h2>
+        <span jhiTranslate="controlDinersApp.usuarisProces.home.title">Usuaris Proces</span>
+        <button class="btn btn-primary float-right jh-create-entity create-usuaris-proces" [routerLink]="['/', { outlets: { popup: ['usuaris-proces-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="controlDinersApp.usuarisProces.home.createLabel">
+            Create new Usuaris Proces
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="usuarisProces">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="diners"><span jhiTranslate="controlDinersApp.usuarisProces.diners">Diners</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="procesId"><span jhiTranslate="controlDinersApp.usuarisProces.proces">Proces</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="usuarisNom"><span jhiTranslate="controlDinersApp.usuarisProces.usuaris">Usuaris</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let usuarisProces of usuarisProces ;trackBy: trackId">
+                <td><a [routerLink]="['../usuaris-proces', usuarisProces.id ]">{{usuarisProces.id}}</a></td>
+                <td>{{usuarisProces.diners}}</td>
+                <td>
+                    <div *ngIf="usuarisProces.procesId">
+                        <a [routerLink]="['../proces', usuarisProces.procesId  ]" >{{usuarisProces.procesId}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="usuarisProces.usuarisId">
+                        <a [routerLink]="['../usuaris', usuarisProces.usuarisId  ]" >{{usuarisProces.usuarisNom}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../usuaris-proces', usuarisProces.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'usuaris-proces/'+ usuarisProces.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'usuaris-proces/'+ usuarisProces.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+        <div *ngIf="usuarisProces && usuarisProces.length">
+            <div class="row justify-content-center">
+                <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+            </div>
+            <div class="row justify-content-center">
+                <ngb-pagination [collectionSize]="totalItems" [pageSize]="itemsPerPage" [(page)]="page" (pageChange)="loadPage(page)"></ngb-pagination>
+            </div>
+        </div>
+</div>
