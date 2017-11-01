@@ -3,6 +3,7 @@ import './vendor.ts';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { Ng2Webstorage } from 'ng2-webstorage';
+import { ChartsModule } from 'ng2-charts/ng2-charts';
 
 import { ControlDinersSharedModule, UserRouteAccessService } from './shared';
 import { ControlDinersHomeModule } from './home/home.module';
@@ -36,6 +37,7 @@ import {
         ControlDinersAdminModule,
         ControlDinersAccountModule,
         ControlDinersEntityModule,
+        ChartsModule,
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [

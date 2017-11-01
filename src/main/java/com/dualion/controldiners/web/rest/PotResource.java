@@ -3,10 +3,14 @@ package com.dualion.controldiners.web.rest;
 import com.codahale.metrics.annotation.Timed;
 
 import com.dualion.controldiners.service.PotService;
+import com.dualion.controldiners.web.rest.errors.BadRequestAlertException;
 import com.dualion.controldiners.web.rest.util.HeaderUtil;
 import com.dualion.controldiners.web.rest.util.PaginationUtil;
 import com.dualion.controldiners.web.rest.vm.ExtreureVM;
 import com.dualion.controldiners.web.rest.vm.PagamentVM;
+
+import io.github.jhipster.web.util.ResponseUtil;
+
 import com.dualion.controldiners.service.dto.PotDTO;
 import com.dualion.controldiners.service.exception.PotException;
 import com.dualion.controldiners.service.exception.ProcesException;
@@ -42,6 +46,8 @@ public class PotResource {
 	@Autowired
     private PotService potService;
 
+	private static final String ENTITY_NAME = "pot";
+	
     /**
      * POST  /api/pots/pagament : Create a new pagament.
      *
@@ -51,21 +57,21 @@ public class PotResource {
      */
     @PostMapping("/api/pots/pagament")
     @Timed
-    public ResponseEntity<?> createPagament(@Valid @RequestBody PagamentVM pagamentVM) throws URISyntaxException {
+    public ResponseEntity<PotDTO> createPagament(@Valid @RequestBody PagamentVM pagamentVM) throws URISyntaxException {
     	log.debug("REST request to Pagament pot : {}", pagamentVM);
     	PotDTO potDTO;
 		try {
 			potDTO = potService.savePagament(pagamentVM);
 		} catch (QuantitatException e) {
-			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("pot", "quantitatnotexist", e.getMessage())).body(null);
+			throw new BadRequestAlertException(e.getMessage(), ENTITY_NAME, "quantitatnotexist");
 		} catch (ProcesException e) {
-			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("pot", "procesnoactive", e.getMessage())).body(null);
+			throw new BadRequestAlertException(e.getMessage(), ENTITY_NAME, "procesnoactive");
 		} catch (UsuarisProcesException e) {
-			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("pot", "usuarisproces", e.getMessage())).body(null);
+			throw new BadRequestAlertException(e.getMessage(), ENTITY_NAME, "usuarisproces");
 		}
 
 		return ResponseEntity.created(new URI("/api/pots/" + potDTO.getId()))
-		        .headers(HeaderUtil.createEntityCreationAlert("pot", potDTO.getId().toString()))
+		        .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, potDTO.getId().toString()))
 		        .body(potDTO);
     }
     
@@ -78,21 +84,21 @@ public class PotResource {
      */
     @PostMapping("/api/pots/cancelarpagament")
     @Timed
-    public ResponseEntity<?> createCancelarPagament(@Valid @RequestBody PagamentVM pagamentVM) throws URISyntaxException {
+    public ResponseEntity<PotDTO> createCancelarPagament(@Valid @RequestBody PagamentVM pagamentVM) throws URISyntaxException {
     	log.debug("REST request to Cancelar Pagament pot : {}", pagamentVM);
     	PotDTO potDTO;
     	try {
     		potDTO = potService.cancelarPagament(pagamentVM);
     	} catch (PotException e) {
-			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("pot", "potnegatiu", e.getMessage())).body(null);
+			throw new BadRequestAlertException(e.getMessage(), ENTITY_NAME, "potnegatiu");
 		} catch (ProcesException e) {
-			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("pot", "procesnoactive", e.getMessage())).body(null);
+			throw new BadRequestAlertException(e.getMessage(), ENTITY_NAME, "procesnoactive");
 		} catch (UsuarisProcesException e) {
-			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("pot", "usuarisproces", e.getMessage())).body(null);
+			throw new BadRequestAlertException(e.getMessage(), ENTITY_NAME, "usuarisproces");
 		}
 		
 		return ResponseEntity.created(new URI("/api/pots/" + potDTO.getId()))
-		        .headers(HeaderUtil.createEntityCreationAlert("pot", potDTO.getId().toString()))
+		        .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, potDTO.getId().toString()))
 		        .body(potDTO);
     }
 
@@ -105,17 +111,17 @@ public class PotResource {
      */
     @PostMapping("/api/pots/extreure")
     @Timed
-    public ResponseEntity<?> createExtreure(@Valid @RequestBody ExtreureVM extreureVM) throws URISyntaxException {
+    public ResponseEntity<PotDTO> createExtreure(@Valid @RequestBody ExtreureVM extreureVM) throws URISyntaxException {
     	log.debug("REST request to extreure pot : {}", extreureVM);
     	PotDTO potDTO;
 		try {
 			potDTO = potService.saveExtreure(extreureVM);
 		} catch (PotException e) {
-			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("pot", "potnegatiu", e.getMessage())).body(null);
+			throw new BadRequestAlertException(e.getMessage(), ENTITY_NAME, "potnegatiu");
 		}
 		
 		return ResponseEntity.created(new URI("/api/pots/" + potDTO.getId()))
-		        .headers(HeaderUtil.createEntityCreationAlert("pot", potDTO.getId().toString()))
+		        .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, potDTO.getId().toString()))
 		        .body(potDTO);
     }
     
@@ -147,11 +153,7 @@ public class PotResource {
     public ResponseEntity<PotDTO> getPot(@PathVariable Long id) {
         log.debug("REST request to get Pot : {}", id);
         PotDTO potDTO = potService.findOne(id);
-        return Optional.ofNullable(potDTO)
-            .map(result -> new ResponseEntity<>(
-                result,
-                HttpStatus.OK))
-            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(potDTO));
     }
 
     /**
@@ -164,10 +166,6 @@ public class PotResource {
     public ResponseEntity<PotDTO> getLastPot() {
         log.debug("REST request to get last Pot");
         PotDTO potDTO = potService.findLast();
-        return Optional.ofNullable(potDTO)
-            .map(result -> new ResponseEntity<>(
-                result,
-                HttpStatus.OK))
-            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(potDTO));
     }
 }

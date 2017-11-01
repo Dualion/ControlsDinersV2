@@ -1,5 +1,6 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { ChartsModule } from 'ng2-charts/ng2-charts';
 
 import { ControlDinersSharedModule } from '../../shared';
 import {
@@ -7,39 +8,26 @@ import {
     PotPopupService,
     PotComponent,
     PotDetailComponent,
-    PotDialogComponent,
-    PotPopupComponent,
-    PotDeletePopupComponent,
-    PotDeleteDialogComponent,
     potRoute,
-    potPopupRoute,
     PotResolvePagingParams,
 } from './';
 
 const ENTITY_STATES = [
     ...potRoute,
-    ...potPopupRoute,
 ];
 
 @NgModule({
     imports: [
         ControlDinersSharedModule,
-        RouterModule.forRoot(ENTITY_STATES, { useHash: true })
+        RouterModule.forRoot(ENTITY_STATES, { useHash: true }),
+        ChartsModule
     ],
     declarations: [
         PotComponent,
-        PotDetailComponent,
-        PotDialogComponent,
-        PotDeleteDialogComponent,
-        PotPopupComponent,
-        PotDeletePopupComponent,
+        PotDetailComponent
     ],
     entryComponents: [
         PotComponent,
-        PotDialogComponent,
-        PotPopupComponent,
-        PotDeleteDialogComponent,
-        PotDeletePopupComponent,
     ],
     providers: [
         PotService,

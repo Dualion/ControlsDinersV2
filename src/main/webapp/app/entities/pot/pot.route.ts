@@ -6,8 +6,6 @@ import { JhiPaginationUtil } from 'ng-jhipster';
 
 import { PotComponent } from './pot.component';
 import { PotDetailComponent } from './pot-detail.component';
-import { PotPopupComponent } from './pot-dialog.component';
-import { PotDeletePopupComponent } from './pot-delete-dialog.component';
 
 @Injectable()
 export class PotResolvePagingParams implements Resolve<any> {
@@ -16,7 +14,7 @@ export class PotResolvePagingParams implements Resolve<any> {
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const page = route.queryParams['page'] ? route.queryParams['page'] : '1';
-        const sort = route.queryParams['sort'] ? route.queryParams['sort'] : 'id,asc';
+        const sort = route.queryParams['sort'] ? route.queryParams['sort'] : 'id,desc';
         return {
             page: this.paginationUtil.parsePage(page),
             predicate: this.paginationUtil.parsePredicate(sort),
@@ -45,38 +43,5 @@ export const potRoute: Routes = [
             pageTitle: 'controlDinersApp.pot.home.title'
         },
         canActivate: [UserRouteAccessService]
-    }
-];
-
-export const potPopupRoute: Routes = [
-    {
-        path: 'pot-new',
-        component: PotPopupComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'controlDinersApp.pot.home.title'
-        },
-        canActivate: [UserRouteAccessService],
-        outlet: 'popup'
-    },
-    {
-        path: 'pot/:id/edit',
-        component: PotPopupComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'controlDinersApp.pot.home.title'
-        },
-        canActivate: [UserRouteAccessService],
-        outlet: 'popup'
-    },
-    {
-        path: 'pot/:id/delete',
-        component: PotDeletePopupComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'controlDinersApp.pot.home.title'
-        },
-        canActivate: [UserRouteAccessService],
-        outlet: 'popup'
     }
 ];

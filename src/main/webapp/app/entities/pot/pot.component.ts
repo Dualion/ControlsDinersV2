@@ -9,7 +9,13 @@ import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 
 @Component({
     selector: 'jhi-pot',
-    templateUrl: './pot.component.html'
+    templateUrl: './pot.component.html',
+    styles: [`
+        .chart {
+            display: block;
+            width: 100%;
+        }`
+    ]
 })
 export class PotComponent implements OnInit, OnDestroy {
 
@@ -27,6 +33,15 @@ currentAccount: any;
     predicate: any;
     previousPage: any;
     reverse: any;
+    values: any[];
+
+    // lineChart
+    public chartLoaded = false;
+    public chartType = 'line';
+    public chartSerie = 'Diners Totals';
+    public chartDatasets: Array<any> = [];
+    public chartLabels: Array<string> = [];
+    public chartOptions: any = { responsive: true };
 
     constructor(
         private potService: PotService,
@@ -107,12 +122,21 @@ currentAccount: any;
         return result;
     }
 
-    private onSuccess(data, headers) {
+    private onSuccess(data: Pot[], headers) {
         this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = headers.get('X-Total-Count');
         this.queryCount = this.totalItems;
         // this.page = pagingParams.page;
         this.pots = data;
+        const valors: Array<number> = [];
+        let date: Date;
+        for (let i = data.length - 1; i >= 0; i--) {
+          valors.push(data[i].dinersTotals);
+          date = new Date(data[i].data);
+          this.chartLabels.push(date.toLocaleString());
+        }
+        this.chartDatasets.push({ data: valors, label: this.chartSerie });
+        this.chartLoaded = true;
     }
     private onError(error) {
         this.jhiAlertService.error(error.message, null, null);

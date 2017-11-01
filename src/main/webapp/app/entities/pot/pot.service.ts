@@ -7,15 +7,18 @@ import { JhiDateUtils } from 'ng-jhipster';
 
 import { Pot } from './pot.model';
 import { ResponseWrapper, createRequestOption } from '../../shared';
+import { Extreure } from './extreure.model';
+import { Pagament } from './pagament.model';
 
 @Injectable()
 export class PotService {
 
-    private resourceUrl = SERVER_API_URL + 'api/pots';
+    private resourceApiUrl = SERVER_API_URL + 'api/pots';
+    private resourcePublicUrl = SERVER_API_URL + 'public/pots';
 
     constructor(private http: Http, private dateUtils: JhiDateUtils) { }
 
-    create(pot: Pot): Observable<Pot> {
+    /*create(pot: Pot): Observable<Pot> {
         const copy = this.convert(pot);
         return this.http.post(this.resourceUrl, copy).map((res: Response) => {
             const jsonResponse = res.json();
@@ -31,8 +34,12 @@ export class PotService {
         });
     }
 
+    delete(id: number): Observable<Response> {
+        return this.http.delete(`${this.resourceUrl}/${id}`);
+    }*/
+
     find(id: number): Observable<Pot> {
-        return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
+        return this.http.get(`${this.resourcePublicUrl}/${id}`).map((res: Response) => {
             const jsonResponse = res.json();
             return this.convertItemFromServer(jsonResponse);
         });
@@ -40,12 +47,36 @@ export class PotService {
 
     query(req?: any): Observable<ResponseWrapper> {
         const options = createRequestOption(req);
-        return this.http.get(this.resourceUrl, options)
+        return this.http.get(this.resourcePublicUrl, options)
             .map((res: Response) => this.convertResponse(res));
     }
 
-    delete(id: number): Observable<Response> {
-        return this.http.delete(`${this.resourceUrl}/${id}`);
+    getLast(): Observable<Pot> {
+        return this.http.get(`${this.resourcePublicUrl}/last`).map((res: Response) => {
+            const jsonResponse = res.json();
+            return this.convertItemFromServer(jsonResponse);
+        });
+    }
+
+    pagament(pagament: Pagament): Observable<Pot> {
+        return this.http.post(`${this.resourceApiUrl}/pagament`, pagament).map((res: Response) => {
+            const jsonResponse = res.json();
+            return this.convertItemFromServer(jsonResponse);
+        });
+    }
+
+    cancelarPagament(pagament: Pagament): Observable<Pot> {
+        return this.http.post(`${this.resourceApiUrl}/cancelarpagament`, pagament).map((res: Response) => {
+            const jsonResponse = res.json();
+            return this.convertItemFromServer(jsonResponse);
+        });
+    }
+
+    extreure(extreure: Extreure): Observable<Pot> {
+        return this.http.post(`${this.resourceApiUrl}/cancelarpagament`, extreure).map((res: Response) => {
+            const jsonResponse = res.json();
+            return this.convertItemFromServer(jsonResponse);
+        });
     }
 
     private convertResponse(res: Response): ResponseWrapper {
@@ -70,10 +101,11 @@ export class PotService {
     /**
      * Convert a Pot to a JSON which can be sent to the server.
      */
-    private convert(pot: Pot): Pot {
+    /*private convertPot(pot: Pot): Pot {
         const copy: Pot = Object.assign({}, pot);
 
         copy.data = this.dateUtils.toDate(pot.data);
         return copy;
-    }
+    }*/
+
 }
