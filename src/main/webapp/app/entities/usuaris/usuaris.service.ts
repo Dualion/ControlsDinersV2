@@ -11,13 +11,14 @@ import { ResponseWrapper, createRequestOption } from '../../shared';
 @Injectable()
 export class UsuarisService {
 
-    private resourceUrl = SERVER_API_URL + 'api/usuarises';
+    private resourceApiUrl = SERVER_API_URL + 'api/usuarises';
+    private resourcePublicUrl = SERVER_API_URL + 'public/usuarises';
 
     constructor(private http: Http, private dateUtils: JhiDateUtils) { }
 
     create(usuaris: Usuaris): Observable<Usuaris> {
         const copy = this.convert(usuaris);
-        return this.http.post(this.resourceUrl, copy).map((res: Response) => {
+        return this.http.post(this.resourceApiUrl, copy).map((res: Response) => {
             const jsonResponse = res.json();
             return this.convertItemFromServer(jsonResponse);
         });
@@ -25,14 +26,14 @@ export class UsuarisService {
 
     update(usuaris: Usuaris): Observable<Usuaris> {
         const copy = this.convert(usuaris);
-        return this.http.put(this.resourceUrl, copy).map((res: Response) => {
+        return this.http.put(this.resourceApiUrl, copy).map((res: Response) => {
             const jsonResponse = res.json();
             return this.convertItemFromServer(jsonResponse);
         });
     }
 
     find(id: number): Observable<Usuaris> {
-        return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
+        return this.http.get(`${this.resourcePublicUrl}/${id}`).map((res: Response) => {
             const jsonResponse = res.json();
             return this.convertItemFromServer(jsonResponse);
         });
@@ -40,12 +41,8 @@ export class UsuarisService {
 
     query(req?: any): Observable<ResponseWrapper> {
         const options = createRequestOption(req);
-        return this.http.get(this.resourceUrl, options)
+        return this.http.get(this.resourcePublicUrl, options)
             .map((res: Response) => this.convertResponse(res));
-    }
-
-    delete(id: number): Observable<Response> {
-        return this.http.delete(`${this.resourceUrl}/${id}`);
     }
 
     private convertResponse(res: Response): ResponseWrapper {

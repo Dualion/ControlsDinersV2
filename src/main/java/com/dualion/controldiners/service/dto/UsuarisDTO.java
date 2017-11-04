@@ -21,7 +21,6 @@ public class UsuarisDTO implements Serializable {
     @Size(min = 5, max = 50)
     private String email;
 
-    @NotNull
     private ZonedDateTime dataInici;
 
     private Boolean actiu;

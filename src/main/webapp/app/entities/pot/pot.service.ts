@@ -18,26 +18,6 @@ export class PotService {
 
     constructor(private http: Http, private dateUtils: JhiDateUtils) { }
 
-    /*create(pot: Pot): Observable<Pot> {
-        const copy = this.convert(pot);
-        return this.http.post(this.resourceUrl, copy).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
-    }
-
-    update(pot: Pot): Observable<Pot> {
-        const copy = this.convert(pot);
-        return this.http.put(this.resourceUrl, copy).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
-    }
-
-    delete(id: number): Observable<Response> {
-        return this.http.delete(`${this.resourceUrl}/${id}`);
-    }*/
-
     find(id: number): Observable<Pot> {
         return this.http.get(`${this.resourcePublicUrl}/${id}`).map((res: Response) => {
             const jsonResponse = res.json();
@@ -97,15 +77,5 @@ export class PotService {
             .convertDateTimeFromServer(json.data);
         return entity;
     }
-
-    /**
-     * Convert a Pot to a JSON which can be sent to the server.
-     */
-    /*private convertPot(pot: Pot): Pot {
-        const copy: Pot = Object.assign({}, pot);
-
-        copy.data = this.dateUtils.toDate(pot.data);
-        return copy;
-    }*/
 
 }

@@ -7,7 +7,6 @@ import { JhiPaginationUtil } from 'ng-jhipster';
 import { UsuarisComponent } from './usuaris.component';
 import { UsuarisDetailComponent } from './usuaris-detail.component';
 import { UsuarisPopupComponent } from './usuaris-dialog.component';
-import { UsuarisDeletePopupComponent } from './usuaris-delete-dialog.component';
 
 @Injectable()
 export class UsuarisResolvePagingParams implements Resolve<any> {
@@ -62,16 +61,6 @@ export const usuarisPopupRoute: Routes = [
     {
         path: 'usuaris/:id/edit',
         component: UsuarisPopupComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'controlDinersApp.usuaris.home.title'
-        },
-        canActivate: [UserRouteAccessService],
-        outlet: 'popup'
-    },
-    {
-        path: 'usuaris/:id/delete',
-        component: UsuarisDeletePopupComponent,
         data: {
             authorities: ['ROLE_USER'],
             pageTitle: 'controlDinersApp.usuaris.home.title'

@@ -2,8 +2,12 @@ package com.dualion.controldiners.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.dualion.controldiners.service.UsuarisService;
+import com.dualion.controldiners.web.rest.errors.BadRequestAlertException;
 import com.dualion.controldiners.web.rest.util.HeaderUtil;
 import com.dualion.controldiners.web.rest.util.PaginationUtil;
+
+import io.github.jhipster.web.util.ResponseUtil;
+
 import com.dualion.controldiners.service.dto.UsuarisDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +37,8 @@ public class UsuarisResource {
     
 	@Autowired
     private UsuarisService usuarisService;
+	
+	private static final String ENTITY_NAME = "usuaris";
 
     /**
      * POST  /usuarises : Create a new usuaris.
@@ -46,11 +52,11 @@ public class UsuarisResource {
     public ResponseEntity<UsuarisDTO> createUsuaris(@Valid @RequestBody UsuarisDTO usuarisDTO) throws URISyntaxException {
         log.debug("REST request to save Usuaris : {}", usuarisDTO);
         if (usuarisDTO.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("usuaris", "idexists", "A new usuaris cannot already have an ID")).body(null);
+        	throw new BadRequestAlertException("A new usuaris cannot already have an ID", ENTITY_NAME, "idexists");
         }
         UsuarisDTO result = usuarisService.save(usuarisDTO);
         return ResponseEntity.created(new URI("/api/usuarises/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert("usuaris", result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -78,7 +84,7 @@ public class UsuarisResource {
         }
         
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert("usuaris", usuarisDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, usuarisDTO.getId().toString()))
             .body(usuarisDTO);
     }
 
@@ -110,10 +116,6 @@ public class UsuarisResource {
     public ResponseEntity<UsuarisDTO> getUsuaris(@PathVariable Long id) {
         log.debug("REST request to get Usuaris : {}", id);
         UsuarisDTO usuarisDTO = usuarisService.findOne(id);
-        return Optional.ofNullable(usuarisDTO)
-            .map(result -> new ResponseEntity<>(
-                result,
-                HttpStatus.OK))
-            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(usuarisDTO));
     }
 }

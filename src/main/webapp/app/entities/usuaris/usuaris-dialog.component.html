@@ -7,11 +7,11 @@
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
-        <div class="form-group" [hidden]="!usuaris.id">
+        <!-- <div class="form-group" [hidden]="!usuaris.id">
             <label for="id" jhiTranslate="global.field.id">ID</label>
             <input type="text" class="form-control" id="id" name="id"
                    [(ngModel)]="usuaris.id" readonly />
-        </div>
+        </div> -->
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="controlDinersApp.usuaris.nom" for="field_nom">Nom</label>
             <input type="text" class="form-control" name="nom" id="field_nom"
@@ -34,7 +34,7 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="controlDinersApp.usuaris.email" for="field_email">Email</label>
             <input type="text" class="form-control" name="email" id="field_email"
-                [(ngModel)]="usuaris.email" required minlength="5" maxlength="20" />
+                [(ngModel)]="usuaris.email" required minlength="5" maxlength="50" />
             <div [hidden]="!(editForm.controls.email?.dirty && editForm.controls.email?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.email?.errors?.required" jhiTranslate="entity.validation.required">
@@ -45,12 +45,12 @@
                    This field is required to be at least 5 characters.
                 </small>
                 <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.email?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 20 }">
-                   This field cannot be longer than 20 characters.
+                   [hidden]="!editForm.controls.email?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 50 }">
+                   This field cannot be longer than 50 characters.
                 </small>
             </div>
         </div>
-        <div class="form-group">
+        <!-- <div class="form-group">
             <label class="form-control-label" jhiTranslate="controlDinersApp.usuaris.dataInici" for="field_dataInici">Data Inici</label>
             <div class="d-flex">
                 <input id="field_dataInici" type="datetime-local" class="form-control" name="dataInici" [(ngModel)]="usuaris.dataInici"
@@ -66,7 +66,7 @@
                     This field should be a date and time.
                 </small>
             </div>
-        </div>
+        </div> -->
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="controlDinersApp.usuaris.actiu" for="field_actiu">Actiu</label>
             <input type="checkbox" class="form-control" name="actiu" id="field_actiu"

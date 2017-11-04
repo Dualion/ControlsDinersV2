@@ -16,7 +16,7 @@
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <!-- <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th> -->
             <th jhiSortBy="nom"><span jhiTranslate="controlDinersApp.usuaris.nom">Nom</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="email"><span jhiTranslate="controlDinersApp.usuaris.email">Email</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="dataInici"><span jhiTranslate="controlDinersApp.usuaris.dataInici">Data Inici</span> <span class="fa fa-sort"></span></th>
@@ -26,8 +26,8 @@
             </thead>
             <tbody>
             <tr *ngFor="let usuaris of usuarises ;trackBy: trackId">
-                <td><a [routerLink]="['../usuaris', usuaris.id ]">{{usuaris.id}}</a></td>
-                <td>{{usuaris.nom}}</td>
+                <!-- <td><a [routerLink]="['../usuaris', usuaris.id ]">{{usuaris.id}}</a></td> -->
+                <td><a [routerLink]="['../usuaris', usuaris.id ]">{{usuaris.nom}}</a></td>
                 <td>{{usuaris.email}}</td>
                 <td>{{usuaris.dataInici | date:'medium'}}</td>
                 <td>{{usuaris.actiu}}</td>
@@ -45,13 +45,6 @@
                                 class="btn btn-primary btn-sm">
                             <span class="fa fa-pencil"></span>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'usuaris/'+ usuaris.id + '/delete'} }]"
-                                replaceUrl="true"
-                                class="btn btn-danger btn-sm">
-                            <span class="fa fa-remove"></span>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
                         </button>
                     </div>
                 </td>
