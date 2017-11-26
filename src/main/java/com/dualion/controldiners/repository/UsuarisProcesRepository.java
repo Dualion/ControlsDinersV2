@@ -4,6 +4,7 @@ import com.dualion.controldiners.domain.UsuarisProces;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
@@ -23,6 +24,9 @@ public interface UsuarisProcesRepository extends JpaRepository<UsuarisProces, Lo
 	
 	@Query("select up from UsuarisProces up join up.proces p where p.id = :procesId")
 	List<UsuarisProces> findAllByProcesId(@Param("procesId") Long procesId);
+	
+	@Query("select up from UsuarisProces up join up.proces p where p.id = :procesId")
+	List<UsuarisProces> findAllByProcesId(@Param("procesId") Long procesId, Sort sort);
 	
 	@Query("select up from UsuarisProces up join up.proces p join up.usuaris u where p.id = :procesId and u.id = :usuariId")
 	Optional<UsuarisProces> findOneByUsuarisIdAndProcesId(@Param("usuariId") Long usuariId, @Param("procesId") Long procesId);

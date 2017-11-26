@@ -1,12 +1,6 @@
 <div>
     <h2>
         <span jhiTranslate="controlDinersApp.usuarisProces.home.title">Usuaris Proces</span>
-        <button class="btn btn-primary float-right jh-create-entity create-usuaris-proces" [routerLink]="['/', { outlets: { popup: ['usuaris-proces-new'] } }]">
-            <span class="fa fa-plus"></span>
-            <span  jhiTranslate="controlDinersApp.usuarisProces.home.createLabel">
-            Create new Usuaris Proces
-            </span>
-        </button>
     </h2>
     <jhi-alert></jhi-alert>
     <div class="row">
@@ -44,20 +38,6 @@
                                 class="btn btn-info btn-sm">
                             <span class="fa fa-eye"></span>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'usuaris-proces/'+ usuarisProces.id + '/edit'} }]"
-                                replaceUrl="true"
-                                class="btn btn-primary btn-sm">
-                            <span class="fa fa-pencil"></span>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'usuaris-proces/'+ usuarisProces.id + '/delete'} }]"
-                                replaceUrl="true"
-                                class="btn btn-danger btn-sm">
-                            <span class="fa fa-remove"></span>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
                         </button>
                     </div>
                 </td>

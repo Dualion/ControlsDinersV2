@@ -2,22 +2,22 @@
     "controlDinersApp": {
         "usuaris" : {
             "home": {
-                "title": "Usuarises",
-                "createLabel": "Create a new Usuaris",
-                "createOrEditLabel": "Create or edit a Usuaris"
+                "title": "Membres del pot",
+                "createLabel": "Crea un nou membre",
+                "createOrEditLabel": "Crea o edita un nou membre"
             },
-            "created": "A new Usuaris is created with identifier {{ param }}",
-            "updated": "A Usuaris is updated with identifier {{ param }}",
-            "deleted": "A Usuaris is deleted with identifier {{ param }}",
+            "created": "S'ha creat un nou membre {{ param }}",
+            "updated": "S'ha actualitzat el membre {{ param }}",
+            "deleted": "S'ha eliminat el membre {{ param }}",
             "delete": {
-                "question": "Are you sure you want to delete Usuaris {{ id }}?"
+                "question": "Estàs segur que viols eliminar el membre {{ id }}?"
             },
             "detail": {
-                "title": "Usuaris"
+                "title": "Membres"
             },
             "nom": "Nom",
             "email": "Email",
-            "dataInici": "Data Inici",
+            "dataInici": "Data d'alta",
             "actiu": "Actiu"
         }
     }

@@ -7,18 +7,12 @@ import {
     QuantitatPopupService,
     QuantitatComponent,
     QuantitatDetailComponent,
-    QuantitatDialogComponent,
-    QuantitatPopupComponent,
-    QuantitatDeletePopupComponent,
-    QuantitatDeleteDialogComponent,
     quantitatRoute,
-    quantitatPopupRoute,
     QuantitatResolvePagingParams,
 } from './';
 
 const ENTITY_STATES = [
     ...quantitatRoute,
-    ...quantitatPopupRoute,
 ];
 
 @NgModule({
@@ -29,17 +23,9 @@ const ENTITY_STATES = [
     declarations: [
         QuantitatComponent,
         QuantitatDetailComponent,
-        QuantitatDialogComponent,
-        QuantitatDeleteDialogComponent,
-        QuantitatPopupComponent,
-        QuantitatDeletePopupComponent,
     ],
     entryComponents: [
         QuantitatComponent,
-        QuantitatDialogComponent,
-        QuantitatPopupComponent,
-        QuantitatDeleteDialogComponent,
-        QuantitatDeletePopupComponent,
     ],
     providers: [
         QuantitatService,

@@ -14,9 +14,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -62,11 +65,11 @@ public class UsuarisProcesServiceImpl implements UsuarisProcesService{
      *  @throws UsuarisProcesException 
      */
     @Transactional(readOnly = true)
-	public List<UsuarisProcesDTO> findAllProcesActiu() throws UsuarisProcesException {
+	public List<UsuarisProcesDTO> findAllProcesActiu() {
     	log.debug("Request to get all UsuarisProces");
     	ProcesDTO procesDTO = procesService.findActiva();
     	if (procesDTO == null) {
-    		throw new UsuarisProcesException("No hi ha un procés actiu");
+    		return new ArrayList<UsuarisProcesDTO>();
     	}
     	return findAllProcesId(procesDTO.getId());
 	}
@@ -81,7 +84,11 @@ public class UsuarisProcesServiceImpl implements UsuarisProcesService{
     @Transactional(readOnly = true)
 	public List<UsuarisProcesDTO> findAllProcesId(Long procesId) {
     	log.debug("Request to get all UsuarisProces from procesId : {}", procesId);
-    	List<UsuarisProces> result = usuarisProcesRepository.findAllByProcesId(procesId);
+    	//List<UsuarisProces> result = usuarisProcesRepository.findAllByProcesId(procesId);
+    	List<UsuarisProces> result = usuarisProcesRepository.findAllByProcesId(procesId,  new Sort(
+    		    new Sort.Order(Direction.ASC, "diners"), 
+    		    new Sort.Order(Direction.ASC, "usuaris.nom")
+    		  ));
     	return result.stream().map(usuarisProces -> usuarisProcesMapper.toDto(usuarisProces)).collect(Collectors.toList());
 	}
     

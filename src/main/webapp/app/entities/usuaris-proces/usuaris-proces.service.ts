@@ -9,28 +9,17 @@ import { ResponseWrapper, createRequestOption } from '../../shared';
 @Injectable()
 export class UsuarisProcesService {
 
-    private resourceUrl = SERVER_API_URL + 'api/usuaris-proces';
+    private resourcePublicUrl = SERVER_API_URL + 'public/usuaris-proces';
 
     constructor(private http: Http) { }
 
-    create(usuarisProces: UsuarisProces): Observable<UsuarisProces> {
-        const copy = this.convert(usuarisProces);
-        return this.http.post(this.resourceUrl, copy).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
-    }
-
-    update(usuarisProces: UsuarisProces): Observable<UsuarisProces> {
-        const copy = this.convert(usuarisProces);
-        return this.http.put(this.resourceUrl, copy).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
+    getActiu(): Observable<ResponseWrapper> {
+        return this.http.get(`${this.resourcePublicUrl}/actiu`)
+            .map((res: Response) => this.convertResponse(res));
     }
 
     find(id: number): Observable<UsuarisProces> {
-        return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
+        return this.http.get(`${this.resourcePublicUrl}/${id}`).map((res: Response) => {
             const jsonResponse = res.json();
             return this.convertItemFromServer(jsonResponse);
         });
@@ -38,12 +27,8 @@ export class UsuarisProcesService {
 
     query(req?: any): Observable<ResponseWrapper> {
         const options = createRequestOption(req);
-        return this.http.get(this.resourceUrl, options)
+        return this.http.get(this.resourcePublicUrl, options)
             .map((res: Response) => this.convertResponse(res));
-    }
-
-    delete(id: number): Observable<Response> {
-        return this.http.delete(`${this.resourceUrl}/${id}`);
     }
 
     private convertResponse(res: Response): ResponseWrapper {
@@ -61,13 +46,5 @@ export class UsuarisProcesService {
     private convertItemFromServer(json: any): UsuarisProces {
         const entity: UsuarisProces = Object.assign(new UsuarisProces(), json);
         return entity;
-    }
-
-    /**
-     * Convert a UsuarisProces to a JSON which can be sent to the server.
-     */
-    private convert(usuarisProces: UsuarisProces): UsuarisProces {
-        const copy: UsuarisProces = Object.assign({}, usuarisProces);
-        return copy;
     }
 }

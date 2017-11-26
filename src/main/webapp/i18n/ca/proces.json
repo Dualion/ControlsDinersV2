@@ -2,9 +2,9 @@
     "controlDinersApp": {
         "proces" : {
             "home": {
-                "title": "Proces",
-                "createLabel": "Create a new Proces",
-                "createOrEditLabel": "Create or edit a Proces"
+                "title": "Procés de pagament",
+                "createLabel": "Crear un nou procés de pagament",
+                "createOrEditLabel": "Crear o editar un procés de pagament"
             },
             "created": "A new Proces is created with identifier {{ param }}",
             "updated": "A Proces is updated with identifier {{ param }}",
@@ -13,10 +13,10 @@
                 "question": "Are you sure you want to delete Proces {{ id }}?"
             },
             "detail": {
-                "title": "Proces"
+                "title": "Procés de pagament"
             },
-            "dataInici": "Data Inici",
-            "estat": "Estat"
+            "dataInici": "Data inici del procés",
+            "estat": "Estat del procés"
         }
     }
 }

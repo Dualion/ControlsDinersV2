@@ -7,18 +7,12 @@ import {
     ProcesPopupService,
     ProcesComponent,
     ProcesDetailComponent,
-    ProcesDialogComponent,
-    ProcesPopupComponent,
-    ProcesDeletePopupComponent,
-    ProcesDeleteDialogComponent,
     procesRoute,
-    procesPopupRoute,
     ProcesResolvePagingParams,
 } from './';
 
 const ENTITY_STATES = [
     ...procesRoute,
-    ...procesPopupRoute,
 ];
 
 @NgModule({
@@ -29,17 +23,9 @@ const ENTITY_STATES = [
     declarations: [
         ProcesComponent,
         ProcesDetailComponent,
-        ProcesDialogComponent,
-        ProcesDeleteDialogComponent,
-        ProcesPopupComponent,
-        ProcesDeletePopupComponent,
     ],
     entryComponents: [
         ProcesComponent,
-        ProcesDialogComponent,
-        ProcesPopupComponent,
-        ProcesDeleteDialogComponent,
-        ProcesDeletePopupComponent,
     ],
     providers: [
         ProcesService,

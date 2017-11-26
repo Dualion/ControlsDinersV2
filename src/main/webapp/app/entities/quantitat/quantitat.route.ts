@@ -6,8 +6,6 @@ import { JhiPaginationUtil } from 'ng-jhipster';
 
 import { QuantitatComponent } from './quantitat.component';
 import { QuantitatDetailComponent } from './quantitat-detail.component';
-import { QuantitatPopupComponent } from './quantitat-dialog.component';
-import { QuantitatDeletePopupComponent } from './quantitat-delete-dialog.component';
 
 @Injectable()
 export class QuantitatResolvePagingParams implements Resolve<any> {
@@ -33,7 +31,7 @@ export const quantitatRoute: Routes = [
             'pagingParams': QuantitatResolvePagingParams
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'controlDinersApp.quantitat.home.title'
         },
         canActivate: [UserRouteAccessService]
@@ -41,42 +39,9 @@ export const quantitatRoute: Routes = [
         path: 'quantitat/:id',
         component: QuantitatDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'controlDinersApp.quantitat.home.title'
         },
         canActivate: [UserRouteAccessService]
-    }
-];
-
-export const quantitatPopupRoute: Routes = [
-    {
-        path: 'quantitat-new',
-        component: QuantitatPopupComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'controlDinersApp.quantitat.home.title'
-        },
-        canActivate: [UserRouteAccessService],
-        outlet: 'popup'
-    },
-    {
-        path: 'quantitat/:id/edit',
-        component: QuantitatPopupComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'controlDinersApp.quantitat.home.title'
-        },
-        canActivate: [UserRouteAccessService],
-        outlet: 'popup'
-    },
-    {
-        path: 'quantitat/:id/delete',
-        component: QuantitatDeletePopupComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'controlDinersApp.quantitat.home.title'
-        },
-        canActivate: [UserRouteAccessService],
-        outlet: 'popup'
     }
 ];

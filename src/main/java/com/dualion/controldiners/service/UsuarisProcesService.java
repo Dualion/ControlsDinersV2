@@ -27,7 +27,7 @@ public interface UsuarisProcesService {
      *  @return the list of entities
      *  @throws UsuarisProcesException 
      */
-    List<UsuarisProcesDTO> findAllProcesActiu() throws UsuarisProcesException;
+    List<UsuarisProcesDTO> findAllProcesActiu();
     
     /**
      *  Get all the usuarisProces.

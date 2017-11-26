@@ -2,8 +2,12 @@ package com.dualion.controldiners.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.dualion.controldiners.service.UsuarisProcesService;
+import com.dualion.controldiners.web.rest.errors.BadRequestAlertException;
 import com.dualion.controldiners.web.rest.util.HeaderUtil;
 import com.dualion.controldiners.web.rest.util.PaginationUtil;
+
+import io.github.jhipster.web.util.ResponseUtil;
+
 import com.dualion.controldiners.service.dto.UsuarisProcesDTO;
 import com.dualion.controldiners.service.exception.UsuarisProcesException;
 
@@ -36,8 +40,10 @@ public class UsuarisProcesResource {
 	@Autowired
     private UsuarisProcesService usuarisProcesService;
 
+	private static final String ENTITY_NAME = "usuarisProces";
+	
     /**
-     * GET  /usuaris-proces/actiu : get all the usuarisProces del proces acriu.
+     * GET  /usuaris-proces/actiu : get all the usuarisProces del proces actiu.
      *
      * @param pageable the pagination information
      * @return the ResponseEntity with status 200 (OK) and the list of usuarisProces in body
@@ -48,12 +54,8 @@ public class UsuarisProcesResource {
     public ResponseEntity<List<UsuarisProcesDTO>> getAllUsuarisProcesActiu()
         throws URISyntaxException {
         log.debug("REST request to get a page of UsuarisProces");
-        List<UsuarisProcesDTO> list;
-		try {
-			list = usuarisProcesService.findAllProcesActiu();
-		} catch (UsuarisProcesException e) {
-			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("usuarisProces", "procesnotactive", "No hi ha cap procés actiu")).body(null);
-		}
+        List<UsuarisProcesDTO> list = usuarisProcesService.findAllProcesActiu();
+        log.debug("UsuarisProces: " + list.toString());
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
     
@@ -85,10 +87,6 @@ public class UsuarisProcesResource {
     public ResponseEntity<UsuarisProcesDTO> getUsuarisProces(@PathVariable Long id) {
         log.debug("REST request to get UsuarisProces : {}", id);
         UsuarisProcesDTO usuarisProcesDTO = usuarisProcesService.findOne(id);
-        return Optional.ofNullable(usuarisProcesDTO)
-            .map(result -> new ResponseEntity<>(
-                result,
-                HttpStatus.OK))
-            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(usuarisProcesDTO));
     }
 }

@@ -7,18 +7,12 @@ import {
     UsuarisProcesPopupService,
     UsuarisProcesComponent,
     UsuarisProcesDetailComponent,
-    UsuarisProcesDialogComponent,
-    UsuarisProcesPopupComponent,
-    UsuarisProcesDeletePopupComponent,
-    UsuarisProcesDeleteDialogComponent,
     usuarisProcesRoute,
-    usuarisProcesPopupRoute,
     UsuarisProcesResolvePagingParams,
 } from './';
 
 const ENTITY_STATES = [
     ...usuarisProcesRoute,
-    ...usuarisProcesPopupRoute,
 ];
 
 @NgModule({
@@ -29,17 +23,9 @@ const ENTITY_STATES = [
     declarations: [
         UsuarisProcesComponent,
         UsuarisProcesDetailComponent,
-        UsuarisProcesDialogComponent,
-        UsuarisProcesDeleteDialogComponent,
-        UsuarisProcesPopupComponent,
-        UsuarisProcesDeletePopupComponent,
     ],
     entryComponents: [
         UsuarisProcesComponent,
-        UsuarisProcesDialogComponent,
-        UsuarisProcesPopupComponent,
-        UsuarisProcesDeleteDialogComponent,
-        UsuarisProcesDeletePopupComponent,
     ],
     providers: [
         UsuarisProcesService,

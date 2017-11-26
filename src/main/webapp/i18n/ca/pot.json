@@ -2,9 +2,9 @@
     "controlDinersApp": {
         "pot" : {
             "home": {
-                "title": "Pots",
-                "createLabel": "Create a new Pot",
-                "createOrEditLabel": "Create or edit a Pot"
+                "title": "Històtic de diners al pot",
+                "createLabel": "Crear una nova entrada al pot",
+                "createOrEditLabel": "Crear o editar una nova entrada de pagamanet al pot"
             },
             "created": "A new Pot is created with identifier {{ param }}",
             "updated": "A Pot is updated with identifier {{ param }}",
@@ -13,11 +13,11 @@
                 "question": "Are you sure you want to delete Pot {{ id }}?"
             },
             "detail": {
-                "title": "Pot"
+                "title": "Pagament al pot"
             },
-            "dinersTotals": "Diners Totals",
-            "data": "Data",
-            "descripcio": "Descripcio"
+            "dinersTotals": "Diners totals del pot",
+            "data": "Data del pagament",
+            "descripcio": "Descripció del pagament/extracció"
         }
     }
 }

@@ -11,28 +11,34 @@ import { ResponseWrapper, createRequestOption } from '../../shared';
 @Injectable()
 export class ProcesService {
 
-    private resourceUrl = SERVER_API_URL + 'api/proces';
+    private resourceApiUrl = SERVER_API_URL + 'api/proces';
+    private resourcePublicUrl = SERVER_API_URL + 'public/proces';
 
     constructor(private http: Http, private dateUtils: JhiDateUtils) { }
 
-    create(proces: Proces): Observable<Proces> {
-        const copy = this.convert(proces);
-        return this.http.post(this.resourceUrl, copy).map((res: Response) => {
+    createProces(): Observable<Proces> {
+        return this.http.post(this.resourceApiUrl, null).map((res: Response) => {
             const jsonResponse = res.json();
             return this.convertItemFromServer(jsonResponse);
         });
     }
 
-    update(proces: Proces): Observable<Proces> {
-        const copy = this.convert(proces);
-        return this.http.put(this.resourceUrl, copy).map((res: Response) => {
+    acabarProces(): Observable<Proces> {
+        return this.http.post(`${this.resourceApiUrl}/terminate`, null).map((res: Response) => {
             const jsonResponse = res.json();
             return this.convertItemFromServer(jsonResponse);
+        });
+    }
+
+    getProcesIsActive(): Observable<boolean> {
+        return this.http.get(`${this.resourcePublicUrl}/actiu`).map((res: Response) => {
+            const jsonResponse = res.json();
+            return jsonResponse.actiu;
         });
     }
 
     find(id: number): Observable<Proces> {
-        return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
+        return this.http.get(`${this.resourcePublicUrl}/${id}`).map((res: Response) => {
             const jsonResponse = res.json();
             return this.convertItemFromServer(jsonResponse);
         });
@@ -40,12 +46,8 @@ export class ProcesService {
 
     query(req?: any): Observable<ResponseWrapper> {
         const options = createRequestOption(req);
-        return this.http.get(this.resourceUrl, options)
+        return this.http.get(this.resourcePublicUrl, options)
             .map((res: Response) => this.convertResponse(res));
-    }
-
-    delete(id: number): Observable<Response> {
-        return this.http.delete(`${this.resourceUrl}/${id}`);
     }
 
     private convertResponse(res: Response): ResponseWrapper {
@@ -65,15 +67,5 @@ export class ProcesService {
         entity.dataInici = this.dateUtils
             .convertDateTimeFromServer(json.dataInici);
         return entity;
-    }
-
-    /**
-     * Convert a Proces to a JSON which can be sent to the server.
-     */
-    private convert(proces: Proces): Proces {
-        const copy: Proces = Object.assign({}, proces);
-
-        copy.dataInici = this.dateUtils.toDate(proces.dataInici);
-        return copy;
-    }
+  }
 }

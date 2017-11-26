@@ -2,8 +2,12 @@ package com.dualion.controldiners.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.dualion.controldiners.service.QuantitatService;
+import com.dualion.controldiners.web.rest.errors.BadRequestAlertException;
 import com.dualion.controldiners.web.rest.util.HeaderUtil;
 import com.dualion.controldiners.web.rest.util.PaginationUtil;
+
+import io.github.jhipster.web.util.ResponseUtil;
+
 import com.dualion.controldiners.service.dto.QuantitatDTO;
 import com.dualion.controldiners.service.exception.QuantitatException;
 
@@ -35,7 +39,9 @@ public class QuantitatResource {
     
 	@Autowired
     private QuantitatService quantitatService;
-
+	
+	private static final String ENTITY_NAME = "quantitat";
+	
     /**
      * POST  /quantitats : Create a new quantitat.
      *
@@ -48,16 +54,16 @@ public class QuantitatResource {
     public ResponseEntity<QuantitatDTO> createQuantitat(@Valid @RequestBody QuantitatDTO quantitatDTO) throws URISyntaxException {
         log.debug("REST request to save Quantitat : {}", quantitatDTO);
         if (quantitatDTO.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("quantitat", "idexists", "A new quantitat cannot already have an ID")).body(null);
+        	throw new BadRequestAlertException("A new quantitat cannot already have an ID", ENTITY_NAME, "idexists");
         }
         QuantitatDTO result;
 		try {
 			result = quantitatService.save(quantitatDTO);
 		} catch (QuantitatException e) {
-			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("quantitat", "procesactiu", e.getMessage())).body(null);
+			throw new BadRequestAlertException(e.getMessage(), ENTITY_NAME, "procesactiu");
 		}
         return ResponseEntity.created(new URI("/api/quantitats/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert("quantitat", result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -89,11 +95,7 @@ public class QuantitatResource {
     public ResponseEntity<QuantitatDTO> getQuantitat(@PathVariable Long id) {
         log.debug("REST request to get Quantitat : {}", id);
         QuantitatDTO quantitatDTO = quantitatService.findOne(id);
-        return Optional.ofNullable(quantitatDTO)
-            .map(result -> new ResponseEntity<>(
-                result,
-                HttpStatus.OK))
-            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(quantitatDTO));
     }
 
     /**
@@ -109,12 +111,8 @@ public class QuantitatResource {
 		try {
 			quantitatDTO = quantitatService.findActiva();
 		} catch (QuantitatException e) {
-			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("quantitat", "actiunoexist", e.getMessage())).body(null);
+			throw new BadRequestAlertException(e.getMessage(), ENTITY_NAME, "actiunoexist");
 		}
-        return Optional.ofNullable(quantitatDTO)
-            .map(result -> new ResponseEntity<>(
-                result,
-                HttpStatus.OK))
-            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(quantitatDTO));
     }
 }

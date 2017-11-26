@@ -2,8 +2,12 @@ package com.dualion.controldiners.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.dualion.controldiners.service.ProcesService;
+import com.dualion.controldiners.web.rest.errors.BadRequestAlertException;
 import com.dualion.controldiners.web.rest.util.HeaderUtil;
 import com.dualion.controldiners.web.rest.util.PaginationUtil;
+
+import io.github.jhipster.web.util.ResponseUtil;
+
 import com.dualion.controldiners.service.dto.ProcesDTO;
 import com.dualion.controldiners.service.exception.ProcesException;
 import com.dualion.controldiners.service.exception.QuantitatException;
@@ -39,6 +43,9 @@ public class ProcesResource {
 	@Autowired
     private ProcesService procesService;
 
+	private static final String ENTITY_NAME = "proces";
+	private static final String ENTITY_NAME_Q = "quantitat";
+	
     /**
      * POST  /proces : Create a new proces.
      *
@@ -54,12 +61,12 @@ public class ProcesResource {
 		try {
 			result = procesService.save();
 		} catch (ProcesException e) {
-			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("proces", "procesactive", e.getMessage())).body(null);
+			throw new BadRequestAlertException(e.getMessage(), ENTITY_NAME, "procesactive");
 		} catch (QuantitatException e) {
-			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("quantitat", "quantitatactive", e.getMessage())).body(null);
+			throw new BadRequestAlertException(e.getMessage(), ENTITY_NAME_Q, "quantitatactive");
 		}
         return ResponseEntity.created(new URI("/api/proces/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert("proces", result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -71,15 +78,15 @@ public class ProcesResource {
      */
     @PostMapping("/api/proces/terminate")
     @Timed
-    public ResponseEntity<?> terminateProces() throws URISyntaxException {
+    public ResponseEntity<ProcesDTO> terminateProces() throws URISyntaxException {
         log.debug("REST request to terminate active Proces ");
         ProcesDTO result;
 		try {
 			result = procesService.acabarProcesActiu();
 		} catch (UsuarisProcesException e) {
-			return ResponseEntity.notFound().headers(HeaderUtil.createFailureAlert("proces", "usuarisnopagats", e.getMessage())).build();
+			throw new BadRequestAlertException(e.getMessage(), ENTITY_NAME, "usuarisnopagats");
 		} catch (ProcesException e) {
-			return ResponseEntity.notFound().headers(HeaderUtil.createFailureAlert("proces", "procesinactiu", e.getMessage())).build();
+			throw new BadRequestAlertException(e.getMessage(), ENTITY_NAME, "procesinactiu");
 		}
         
         return ResponseEntity.created(new URI("/api/proces/" + result.getId()))
@@ -115,11 +122,7 @@ public class ProcesResource {
     public ResponseEntity<ProcesDTO> getProces(@PathVariable Long id) {
         log.debug("REST request to get Proces : {}", id);
         ProcesDTO procesDTO = procesService.findOne(id);
-        return Optional.ofNullable(procesDTO)
-            .map(result -> new ResponseEntity<>(
-                result,
-                HttpStatus.OK))
-            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(procesDTO));
     }
 
     /**

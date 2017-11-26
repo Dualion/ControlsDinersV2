@@ -6,8 +6,6 @@ import { JhiPaginationUtil } from 'ng-jhipster';
 
 import { ProcesComponent } from './proces.component';
 import { ProcesDetailComponent } from './proces-detail.component';
-import { ProcesPopupComponent } from './proces-dialog.component';
-import { ProcesDeletePopupComponent } from './proces-delete-dialog.component';
 
 @Injectable()
 export class ProcesResolvePagingParams implements Resolve<any> {
@@ -45,38 +43,5 @@ export const procesRoute: Routes = [
             pageTitle: 'controlDinersApp.proces.home.title'
         },
         canActivate: [UserRouteAccessService]
-    }
-];
-
-export const procesPopupRoute: Routes = [
-    {
-        path: 'proces-new',
-        component: ProcesPopupComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'controlDinersApp.proces.home.title'
-        },
-        canActivate: [UserRouteAccessService],
-        outlet: 'popup'
-    },
-    {
-        path: 'proces/:id/edit',
-        component: ProcesPopupComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'controlDinersApp.proces.home.title'
-        },
-        canActivate: [UserRouteAccessService],
-        outlet: 'popup'
-    },
-    {
-        path: 'proces/:id/delete',
-        component: ProcesDeletePopupComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'controlDinersApp.proces.home.title'
-        },
-        canActivate: [UserRouteAccessService],
-        outlet: 'popup'
     }
 ];

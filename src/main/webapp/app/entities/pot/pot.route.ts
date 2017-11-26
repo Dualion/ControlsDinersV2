@@ -31,7 +31,7 @@ export const potRoute: Routes = [
             'pagingParams': PotResolvePagingParams
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: [],
             pageTitle: 'controlDinersApp.pot.home.title'
         },
         canActivate: [UserRouteAccessService]

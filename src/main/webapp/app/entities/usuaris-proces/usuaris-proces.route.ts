@@ -6,8 +6,6 @@ import { JhiPaginationUtil } from 'ng-jhipster';
 
 import { UsuarisProcesComponent } from './usuaris-proces.component';
 import { UsuarisProcesDetailComponent } from './usuaris-proces-detail.component';
-import { UsuarisProcesPopupComponent } from './usuaris-proces-dialog.component';
-import { UsuarisProcesDeletePopupComponent } from './usuaris-proces-delete-dialog.component';
 
 @Injectable()
 export class UsuarisProcesResolvePagingParams implements Resolve<any> {
@@ -33,7 +31,7 @@ export const usuarisProcesRoute: Routes = [
             'pagingParams': UsuarisProcesResolvePagingParams
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'controlDinersApp.usuarisProces.home.title'
         },
         canActivate: [UserRouteAccessService]
@@ -41,42 +39,9 @@ export const usuarisProcesRoute: Routes = [
         path: 'usuaris-proces/:id',
         component: UsuarisProcesDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'controlDinersApp.usuarisProces.home.title'
         },
         canActivate: [UserRouteAccessService]
-    }
-];
-
-export const usuarisProcesPopupRoute: Routes = [
-    {
-        path: 'usuaris-proces-new',
-        component: UsuarisProcesPopupComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'controlDinersApp.usuarisProces.home.title'
-        },
-        canActivate: [UserRouteAccessService],
-        outlet: 'popup'
-    },
-    {
-        path: 'usuaris-proces/:id/edit',
-        component: UsuarisProcesPopupComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'controlDinersApp.usuarisProces.home.title'
-        },
-        canActivate: [UserRouteAccessService],
-        outlet: 'popup'
-    },
-    {
-        path: 'usuaris-proces/:id/delete',
-        component: UsuarisProcesDeletePopupComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'controlDinersApp.usuarisProces.home.title'
-        },
-        canActivate: [UserRouteAccessService],
-        outlet: 'popup'
     }
 ];

@@ -13,29 +13,16 @@
     	<table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-            <!-- <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th> -->
             <th jhiSortBy="dinersTotals"><span jhiTranslate="controlDinersApp.pot.dinersTotals">Diners Totals</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="data"><span jhiTranslate="controlDinersApp.pot.data">Data</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="descripcio"><span jhiTranslate="controlDinersApp.pot.descripcio">Descripcio</span> <span class="fa fa-sort"></span></th>
-            <!-- <th></th> -->
+            <th jhiSortBy="descripcio"><span jhiTranslate="controlDinersApp.pot.descripcio">Descripció</span> <span class="fa fa-sort"></span></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let pot of pots ;trackBy: trackId">
-                <!-- <td><a [routerLink]="['../pot', pot.id ]">{{pot.id}}</a></td> -->
-                <td>{{pot.dinersTotals}}</td>
+                <td>{{pot.dinersTotals | currency }}</td>
                 <td>{{pot.data | date:'medium'}}</td>
                 <td>{{pot.descripcio}}</td>
-                <!-- <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
-                                [routerLink]="['../pot', pot.id ]"
-                                class="btn btn-info btn-sm">
-                            <span class="fa fa-eye"></span>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                        </button>
-                    </div>
-                </td> -->
             </tr>
             </tbody>
         </table>

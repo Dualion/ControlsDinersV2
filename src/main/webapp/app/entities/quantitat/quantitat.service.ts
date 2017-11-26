@@ -9,28 +9,28 @@ import { ResponseWrapper, createRequestOption } from '../../shared';
 @Injectable()
 export class QuantitatService {
 
-    private resourceUrl = SERVER_API_URL + 'api/quantitats';
+    private resourceApiUrl = SERVER_API_URL + 'api/quantitats';
+    private resourcePublicUrl = SERVER_API_URL + 'public/quantitats';
 
     constructor(private http: Http) { }
 
     create(quantitat: Quantitat): Observable<Quantitat> {
         const copy = this.convert(quantitat);
-        return this.http.post(this.resourceUrl, copy).map((res: Response) => {
+        return this.http.post(this.resourceApiUrl, copy).map((res: Response) => {
             const jsonResponse = res.json();
             return this.convertItemFromServer(jsonResponse);
         });
     }
 
-    update(quantitat: Quantitat): Observable<Quantitat> {
-        const copy = this.convert(quantitat);
-        return this.http.put(this.resourceUrl, copy).map((res: Response) => {
+    getActiva(): Observable<Quantitat> {
+        return this.http.get(`${this.resourcePublicUrl}/activa`).map((res: Response) => {
             const jsonResponse = res.json();
             return this.convertItemFromServer(jsonResponse);
         });
     }
 
     find(id: number): Observable<Quantitat> {
-        return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
+        return this.http.get(`${this.resourcePublicUrl}/${id}`).map((res: Response) => {
             const jsonResponse = res.json();
             return this.convertItemFromServer(jsonResponse);
         });
@@ -38,12 +38,8 @@ export class QuantitatService {
 
     query(req?: any): Observable<ResponseWrapper> {
         const options = createRequestOption(req);
-        return this.http.get(this.resourceUrl, options)
+        return this.http.get(this.resourcePublicUrl, options)
             .map((res: Response) => this.convertResponse(res));
-    }
-
-    delete(id: number): Observable<Response> {
-        return this.http.delete(`${this.resourceUrl}/${id}`);
     }
 
     private convertResponse(res: Response): ResponseWrapper {
