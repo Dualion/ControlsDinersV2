@@ -53,7 +53,7 @@ export class PotService {
     }
 
     extreure(extreure: Extreure): Observable<Pot> {
-        return this.http.post(`${this.resourceApiUrl}/cancelarpagament`, extreure).map((res: Response) => {
+        return this.http.post(`${this.resourceApiUrl}/extreure`, extreure).map((res: Response) => {
             const jsonResponse = res.json();
             return this.convertItemFromServer(jsonResponse);
         });

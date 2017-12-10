@@ -13,6 +13,7 @@ import { QuantitatService } from '../entities/quantitat';
 import { Quantitat } from '../entities/quantitat/quantitat.model';
 import { UsuarisProcesService } from '../entities/usuaris-proces';
 import { UsuarisProces } from '../entities/usuaris-proces/usuaris-proces.model';
+import { ExtreureDinersModalService } from './extreure-diners/extreure-diners-modal.service';
 
 @Component({
     selector: 'jhi-home',
@@ -24,7 +25,8 @@ import { UsuarisProces } from '../entities/usuaris-proces/usuaris-proces.model';
 })
 export class HomeComponent implements OnInit {
     account: Account;
-    modalRef: NgbModalRef;
+    modalRefLogin: NgbModalRef;
+    modalRefExtreure: NgbModalRef;
 
     lastPot: number;
     procesIsActive: boolean;
@@ -34,6 +36,7 @@ export class HomeComponent implements OnInit {
     constructor(
         private principal: Principal,
         private loginModalService: LoginModalService,
+        private extreureDinersModalService: ExtreureDinersModalService,
         private eventManager: JhiEventManager,
         private potService: PotService,
         private procesService: ProcesService,
@@ -66,7 +69,7 @@ export class HomeComponent implements OnInit {
     }
 
     login() {
-        this.modalRef = this.loginModalService.open();
+        this.modalRefLogin = this.loginModalService.open();
     }
 
     getLast() {
@@ -142,7 +145,10 @@ export class HomeComponent implements OnInit {
     }
 
     extreurePot() {
-        alert('Extreure diners');
+        this.modalRefExtreure = this.extreureDinersModalService.open();
+        this.modalRefExtreure.result.then((result) => {
+            this.lastPot = result.dinersTotals;
+        });
     }
 
     quantitatNova() {

@@ -5,6 +5,8 @@ import { ControlDinersSharedModule } from '../shared';
 import { ControlDinersEntityModule } from '../entities/entity.module';
 
 import { HOME_ROUTE, HomeComponent } from './';
+import { ExtreureDinersModalService } from './extreure-diners/extreure-diners-modal.service';
+import { ExtreureDinersModalComponent } from './extreure-diners/extreure-diners.component';
 
 @NgModule({
     imports: [
@@ -14,10 +16,16 @@ import { HOME_ROUTE, HomeComponent } from './';
     ],
     declarations: [
         HomeComponent,
+        ExtreureDinersModalComponent
     ],
     entryComponents: [
+        ExtreureDinersModalComponent
     ],
     providers: [
+        ExtreureDinersModalService
+    ],
+    exports: [
+        ExtreureDinersModalComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
