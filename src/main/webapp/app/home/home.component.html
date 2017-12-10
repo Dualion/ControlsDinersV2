@@ -2,7 +2,7 @@
 	<jhi-alert-error></jhi-alert-error>
 	<div class="row">
 		<p>
-			<strong>Pot total: </strong>{{ lastPot | currency }} &nbsp;
+			<strong>Pot total: </strong>{{ lastPot | currency:'EUR':true }} &nbsp;
 			<button class="btn btn-primary btn-sm" (click)="extreurePot()" *ngSwitchCase="true">
 				<span class="fa fa-minus"></span>
 				<span class="d-none d-md-inline">Extreure diners</span>
@@ -11,7 +11,7 @@
 	</div>
 	<div class="row">
 		<p>
-			<strong>Quantiat: </strong>{{ quantitatActiva | currency }} &nbsp;
+			<strong>Quantiat: </strong>{{ quantitatActiva | currency:'EUR':true }} &nbsp;
 			<button class="btn btn-primary btn-sm" (click)="quantitatNova()" *ngSwitchCase="true">
 				<span class="fa fa-plus"></span>
 				<span class="d-none d-md-inline">Modificar Quantitat</span> 
@@ -28,7 +28,7 @@
 			<span class="d-none d-md-inline">Acabar Proces</span>
 		</button>
 	</div>
-	<div class="table-responsive" *ngIf="usuarisProces.length > 0">
+	<div class="table-responsive" *ngIf="(usuarisProces != null && usuarisProces.length) > 0">
         <table class="table table-striped">
             <thead>
             	<tr>
@@ -38,11 +38,11 @@
                 </tr>
             </thead>
             <tbody>
-            	<tr *ngFor="let up of usuarisProces" [ngSwitch]="isAuthenticated()">
+            	<tr *ngFor="let up of usuarisProces" >
                     <td>{{up.usuarisNom}}</td>
-                    <td>{{up.diners | currency }}</td>
+                    <td>{{up.diners | currency:'EUR':true }}</td>
 
-                    <td class="text-right" >
+                    <td class="text-right" *ngSwitchCase="true" >
                         <div class="btn-group flex-btn-group-container" >
                             <button type="submit" class="btn btn-info btn-sm" (click)="pagar(up.usuarisId)" [disabled]="up.diners > 0">
                             	<span class="fa fa-euro"></span>

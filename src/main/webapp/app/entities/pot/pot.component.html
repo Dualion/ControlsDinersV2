@@ -20,7 +20,7 @@
             </thead>
             <tbody>
             <tr *ngFor="let pot of pots ;trackBy: trackId">
-                <td>{{pot.dinersTotals | currency }}</td>
+                <td>{{pot.dinersTotals | currency:'EUR':true }}</td>
                 <td>{{pot.data | date:'medium'}}</td>
                 <td>{{pot.descripcio}}</td>
             </tr>
