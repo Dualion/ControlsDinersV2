@@ -31,7 +31,7 @@ export const usuarisProcesRoute: Routes = [
             'pagingParams': UsuarisProcesResolvePagingParams
         },
         data: {
-            authorities: ['ROLE_ADMIN'],
+            authorities: ['ROLE_USER'],
             pageTitle: 'controlDinersApp.usuarisProces.home.title'
         },
         canActivate: [UserRouteAccessService]
@@ -39,7 +39,7 @@ export const usuarisProcesRoute: Routes = [
         path: 'usuaris-proces/:id',
         component: UsuarisProcesDetailComponent,
         data: {
-            authorities: ['ROLE_ADMIN'],
+            authorities: ['ROLE_USER'],
             pageTitle: 'controlDinersApp.usuarisProces.home.title'
         },
         canActivate: [UserRouteAccessService]

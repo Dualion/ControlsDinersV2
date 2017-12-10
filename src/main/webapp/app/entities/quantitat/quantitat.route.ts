@@ -31,7 +31,7 @@ export const quantitatRoute: Routes = [
             'pagingParams': QuantitatResolvePagingParams
         },
         data: {
-            authorities: ['ROLE_ADMIN'],
+            authorities: ['ROLE_USER'],
             pageTitle: 'controlDinersApp.quantitat.home.title'
         },
         canActivate: [UserRouteAccessService]
@@ -39,7 +39,7 @@ export const quantitatRoute: Routes = [
         path: 'quantitat/:id',
         component: QuantitatDetailComponent,
         data: {
-            authorities: ['ROLE_ADMIN'],
+            authorities: ['ROLE_USER'],
             pageTitle: 'controlDinersApp.quantitat.home.title'
         },
         canActivate: [UserRouteAccessService]
